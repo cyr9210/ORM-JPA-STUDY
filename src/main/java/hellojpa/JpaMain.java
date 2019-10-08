@@ -1,7 +1,9 @@
 package hellojpa;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 
 public class JpaMain {
 
@@ -14,7 +16,10 @@ public class JpaMain {
         tx.begin();
 
         try {
-            List<Member> memberList = em.createQuery("select m from Member as m", Member.class).getResultList();
+            Member member = em.find(Member.class, 150L);
+            member.setName("update name");
+
+            System.out.println("=============================");
 
             tx.commit();
         } catch (Exception e) {
