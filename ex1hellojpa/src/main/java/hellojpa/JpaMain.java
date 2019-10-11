@@ -16,10 +16,16 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = em.find(Member.class, 150L);
-            member.setName("detach test");
+            Member memberA = createMember("A");
+            Member memberB = createMember("B");
+            Member memberC = createMember("C");
+            Member memberD = createMember("D");
+            System.out.println("=============================");
 
-            em.detach(member);
+            em.persist(memberA);
+            em.persist(memberB);
+            em.persist(memberC);
+            em.persist(memberD);
 
             System.out.println("=============================");
 
@@ -30,5 +36,11 @@ public class JpaMain {
             em.close();
         }
         emf.close();
+    }
+
+    private static Member createMember(String username) {
+        Member member = new Member();
+        member.setUsername(username);
+        return member;
     }
 }
