@@ -17,23 +17,16 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Team team = new Team();
-            team.setName("team A");
-
             Member member = new Member();
             member.setUsername("bong");
-            member.changeTeam(team);
 
-//            team.getMembers().add(member);
-
-            em.persist(team);
             em.persist(member);
 
-//            em.flush();
-//            em.clear();
+            Team team = new Team();
+            team.setName("team A");
+            team.getMembers().add(member);
 
-            Team findTeam = em.find(Team.class, team.getId());
-            System.out.println(findTeam.getMembers().size());
+            em.persist(team);
 
             tx.commit();
         } catch (Exception e) {

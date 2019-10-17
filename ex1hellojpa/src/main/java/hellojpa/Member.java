@@ -15,9 +15,17 @@ public class Member {
     @Column(name = "name")
     private String username;
 
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private Team team;
+    @OneToOne
+    @JoinColumn(name = "locker_id")
+    private Locker locker;
+
+//    @ManyToOne
+//    @JoinColumn(name = "team_id", insertable = false, updatable = false)
+//    private Team team;
+
+//    @ManyToOne
+//    @JoinColumn(name = "team_id")
+//    private Team team;
 
     public Member() {
     }
@@ -38,12 +46,12 @@ public class Member {
         this.username = username;
     }
 
-    public Team getTeam() {
-        return team;
-    }
+//    public Team getTeam() {
+//        return team;
+//    }
 
-    public void changeTeam (Team team) {
-        this.team = team;
-        team.getMembers().add(this);
-    }
+//    public void changeTeam (Team team) {
+//        this.team = team;
+//        team.getMembers().add(this);
+//    }
 }
