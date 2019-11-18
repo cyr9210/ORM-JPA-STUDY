@@ -1,15 +1,14 @@
 package jpashop.domain;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "order_item")
-@Getter @Setter @NoArgsConstructor
-public class OrderItem {
+@Getter @Setter
+public class OrderItem extends BaseEntity{
 
     @Id @GeneratedValue
     private Long id;

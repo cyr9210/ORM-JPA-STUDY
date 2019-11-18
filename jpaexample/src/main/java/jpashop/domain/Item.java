@@ -11,7 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "item")
 @Getter @Setter @NoArgsConstructor
-public class Item {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Item extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "item_id")

@@ -1,6 +1,5 @@
 package jpashop.domain;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,7 @@ import java.util.List;
 @Table(name = "member")
 @Getter @Setter
 @NoArgsConstructor
-public class Member {
+public class Member extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name = "member_id")
