@@ -30,16 +30,12 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    public void addItem(Item item, int count) {
-        if (count > item.getStockQuantity()) {
-            return;
-        }
+    @OneToOne
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery;
 
-        OrderItem orderItem = new OrderItem();
-        orderItem.setItem(item);
-        orderItem.setCount(count);
-        orderItem.setOrderPrice(item.getPrice() * count);
-        orderItem.setOrder(this);
+    public void addOrderItem(OrderItem orderItem) {
         this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
     }
 }

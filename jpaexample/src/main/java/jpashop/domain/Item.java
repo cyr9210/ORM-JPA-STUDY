@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,4 +26,6 @@ public class Item {
     @OneToMany(mappedBy = "item")
     private List<OrderItem> orderItems;
 
+    @ManyToMany(mappedBy = "items")
+    private List<Category> categories = new ArrayList<>();
 }
