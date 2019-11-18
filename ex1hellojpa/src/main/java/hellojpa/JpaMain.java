@@ -1,6 +1,7 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class JpaMain {
@@ -14,7 +15,14 @@ public class JpaMain {
         tx.begin();
 
         try {
-            
+            Member member = new Member();
+            member.setUsername("test");
+            member.setCreatedBy("user");
+            member.setCreatedDate(LocalDateTime.now());
+
+            em.flush();
+            em.clear();
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();

@@ -3,28 +3,45 @@ package hellojpa;
 import jdk.nashorn.internal.objects.annotations.Getter;
 
 import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
-public class BaseEntity {
+public abstract class BaseEntity {
 
     private String createdBy;
-    private String createdDate;
+    private LocalDateTime createdDate;
     private String lastModifiedBy;
-    private String lastModifiedDate;
+    private LocalDateTime lastModifiedDate;
 
     public String getCreatedBy() {
         return createdBy;
     }
 
-    public String getCreatedDate() {
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDateTime getCreatedDate() {
         return createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 
     public String getLastModifiedBy() {
         return lastModifiedBy;
     }
 
-    public String getLastModifiedDate() {
+    public void setLastModifiedBy(String lastModifiedBy) {
+        this.lastModifiedBy = lastModifiedBy;
+    }
+
+    public LocalDateTime getLastModifiedDate() {
         return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(LocalDateTime lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 }
