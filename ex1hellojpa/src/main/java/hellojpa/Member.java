@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Member extends BaseEntity{
+public class Member extends BaseEntity {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "member_id")
     private Long id;
 
@@ -22,9 +23,9 @@ public class Member extends BaseEntity{
 //    @JoinColumn(name = "locker_id")
 //    private Locker locker;
 
-//    @ManyToOne
-//    @JoinColumn(name = "team_id", insertable = false, updatable = false)
-//    private Team team;
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
 //    @ManyToOne
 //    @JoinColumn(name = "team_id")
@@ -49,12 +50,19 @@ public class Member extends BaseEntity{
         this.username = username;
     }
 
-//    public Team getTeam() {
-//        return team;
-//    }
+    public List<Product> getProducts() {
+        return products;
+    }
 
-//    public void changeTeam (Team team) {
-//        this.team = team;
-//        team.getMembers().add(this);
-//    }
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }
