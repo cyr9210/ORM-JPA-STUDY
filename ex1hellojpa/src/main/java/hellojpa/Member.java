@@ -25,6 +25,7 @@ public class Member extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "team_id")
+
     private Team team;
 
 //    @ManyToOne

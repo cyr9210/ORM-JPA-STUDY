@@ -25,6 +25,9 @@ public class JpaMain {
             System.out.println("isLoaded : " + persistenceUnitUtil.isLoaded(reference));
 
 //            System.out.println(reference.getUsername());
+
+            Member member = new Member();
+
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
