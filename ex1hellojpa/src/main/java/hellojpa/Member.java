@@ -1,8 +1,6 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Member extends BaseEntity {
@@ -15,9 +13,9 @@ public class Member extends BaseEntity {
     @Column(name = "name")
     private String username;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "member_product")
-    private List<Product> products = new ArrayList<>();
+//    @ManyToMany
+//    @JoinTable(name = "member_product")
+//    private List<Product> products = new ArrayList<>();
 
 //    @OneToOne
 //    @JoinColumn(name = "locker_id")
@@ -50,13 +48,6 @@ public class Member extends BaseEntity {
         this.username = username;
     }
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
 
     public Team getTeam() {
         return team;

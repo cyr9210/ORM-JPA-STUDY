@@ -1,8 +1,9 @@
 package hellojpa;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table()
@@ -13,12 +14,9 @@ public class Product {
 
     private String name;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Member> members = new ArrayList<>();
+//    @ManyToMany(mappedBy = "products")
+//    private List<Member> members = new ArrayList<>();
 
-    public List<Member> getMembers() {
-        return members;
-    }
 
     public Long getId() {
         return id;
