@@ -1,8 +1,9 @@
 package hellojpa;
 
-import org.hibernate.Hibernate;
-
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 
 public class JpaMain {
 
@@ -15,18 +16,19 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member reference = em.getReference(Member.class, 1L);
-            System.out.println(reference.getClass());
+            Team team = new Team();
+            team.setName("bong");
 
-            PersistenceUnitUtil persistenceUnitUtil = emf.getPersistenceUnitUtil();
-            System.out.println("isLoaded : " + persistenceUnitUtil.isLoaded(reference));
-
-            Hibernate.initialize(reference);
-            System.out.println("isLoaded : " + persistenceUnitUtil.isLoaded(reference));
-
-//            System.out.println(reference.getUsername());
 
             Member member = new Member();
+            member.setUsername("bong");
+            member.setTeam(team);
+//            System.out.println("test1 : " + team.getMembers().getClass().getName());
+
+            em.persist(team);
+
+            team.getMembers();
+            System.out.println("test2 : " + team.getMembers().getClass().getName());
 
             tx.commit();
         } catch (Exception e) {

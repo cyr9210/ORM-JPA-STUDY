@@ -15,7 +15,7 @@ public class Member extends BaseEntity {
     @Column(name = "name")
     private String username;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "member_product")
     private List<Product> products = new ArrayList<>();
 
@@ -23,9 +23,8 @@ public class Member extends BaseEntity {
 //    @JoinColumn(name = "locker_id")
 //    private Locker locker;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
-
     private Team team;
 
 //    @ManyToOne
