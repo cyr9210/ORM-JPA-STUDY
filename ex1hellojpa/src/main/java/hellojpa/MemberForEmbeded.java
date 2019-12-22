@@ -1,6 +1,10 @@
 package hellojpa;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class MemberForEmbeded {
@@ -17,19 +21,14 @@ public class MemberForEmbeded {
   @Embedded
   private Address homeAddress;
 
-  @Embedded
-  @AttributeOverrides({
-      @AttributeOverride(
-          name = "city", column = @Column(name = "work_city")
-      ),
-      @AttributeOverride(
-          name = "street", column = @Column(name = "work_street")
-      ),
-      @AttributeOverride(
-          name = "zip_code", column = @Column(name = "work_zip_code")
-      )
-  })
-  private Address workAddress;
+  @ElementCollection
+  @CollectionTable(name = "favoirite_foods", joinColumns = @JoinColumn(name = "member_id"))
+  @Column(name = "food_name")
+  private Set<String> favoriteFoods = new HashSet<>();
+
+  @ElementCollection
+  @CollectionTable(name = "address", joinColumns = @JoinColumn(name = "member_id"))
+  private List<Address> addressHistory = new ArrayList<>();
 
   public MemberForEmbeded() {
   }
@@ -70,5 +69,21 @@ public class MemberForEmbeded {
 
   public void setHomeAddress(Address homeAddress) {
     this.homeAddress = homeAddress;
+  }
+
+  public Set<String> getFavoriteFoods() {
+    return favoriteFoods;
+  }
+
+  public void setFavoriteFoods(Set<String> favoriteFoods) {
+    this.favoriteFoods = favoriteFoods;
+  }
+
+  public List<Address> getAddressHistory() {
+    return addressHistory;
+  }
+
+  public void setAddressHistory(List<Address> addressHistory) {
+    this.addressHistory = addressHistory;
   }
 }
