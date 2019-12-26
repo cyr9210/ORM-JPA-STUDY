@@ -1,10 +1,9 @@
 package hellojpa;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 
 public class JpaMain {
 
@@ -17,13 +16,35 @@ public class JpaMain {
         tx.begin();
 
         try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<Member> query = cb.createQuery(Member.class);
+            Team team = new Team();
+            team.setName("team1");
 
-            Root<Member> m = query.from(Member.class);
-            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+            Member member = new Member();
+            member.setUsername("1");
+            member.setTeam(team);
 
-            List<Member> resultList = em.createQuery(cq).getResultList();
+            Member member2 = new Member();
+            member2.setUsername("2");
+            member2.setTeam(team);
+
+            em.persist(team);
+            em.persist(member);
+            em.persist(member2);
+
+//            em.flush();
+//            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+
+            Team findTeam = em.find(Team.class, team.getId());
+            em.remove(findTeam);
+//            Member findMember2 = em.find(Member.class, member2.getId());
+//            em.remove(findMember);
+//            em.remove(findMember2);
+
+            em.clear();
+
+            System.out.println("test" + findMember.getUsername());
 
             tx.commit();
         } catch (Exception e) {
