@@ -12,9 +12,17 @@ public class Member {
 
   private Integer age;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "team_id")
   private Team team;
+
+  @Enumerated(EnumType.STRING)
+  private MemberType memberType;
+
+  public void changeTeam(Team team) {
+    this.team = team;
+    team.getMembers().add(this);
+  }
 
   public Long getId() {
     return id;
@@ -46,5 +54,14 @@ public class Member {
 
   public void setAge(Integer age) {
     this.age = age;
+  }
+
+  @Override
+  public String toString() {
+    return "Member{" +
+        "id=" + id +
+        ", name='" + name + '\'' +
+        ", age=" + age +
+        '}';
   }
 }

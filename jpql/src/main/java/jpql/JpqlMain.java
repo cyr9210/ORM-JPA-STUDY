@@ -16,17 +16,21 @@ public class JpqlMain {
     tx.begin();
 
     try {
-      Member member = new Member();
-      member.setName("bong");
-      member.setAge(10);
-      em.persist(member);
+//      Team team = new Team();
+//      team.setName("teamA");
+//      em.persist(team);
+//
+//      Member member = createMember("member", 10);
+//      member.changeTeam(team);
+//      em.persist(member);
+//
+//      em.flush();
+//      em.clear();
 
-      List<MemberDTO> resultList = em.createQuery("select new jpql.MemberDTO(m.name, m.age) from Member m", MemberDTO.class)
+      List<Member> resultList = em.createQuery("select m.name, 'HELLO', TRUE from Member m " +
+                                                        "where m.memberType = :userType")
+          .setParameter("userType", MemberType.ADMIN)
           .getResultList();
-
-      MemberDTO result = resultList.get(0);
-      System.out.println(result.getName());
-      System.out.println(result.getAge());
 
       tx.commit();
     } catch (Exception e) {
@@ -37,5 +41,12 @@ public class JpqlMain {
     }
 
     emf.close();
+  }
+
+  private static Member createMember(String name, int age) {
+    Member member = new Member();
+    member.setName(name);
+    member.setAge(age);
+    return member;
   }
 }
