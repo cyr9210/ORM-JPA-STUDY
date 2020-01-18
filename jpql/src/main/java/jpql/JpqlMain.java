@@ -16,21 +16,27 @@ public class JpqlMain {
     tx.begin();
 
     try {
-//      Team team = new Team();
-//      team.setName("teamA");
-//      em.persist(team);
-//
-//      Member member = createMember("member", 10);
-//      member.changeTeam(team);
-//      em.persist(member);
-//
-//      em.flush();
-//      em.clear();
 
-      List<Member> resultList = em.createQuery("select m.name, 'HELLO', TRUE from Member m " +
-                                                        "where m.memberType = :userType")
-          .setParameter("userType", MemberType.ADMIN)
-          .getResultList();
+      for (int i = 0; i < 100; i++) {
+        Member member = createMember("member", i);
+        em.persist(member);
+      }
+
+      em.flush();
+      em.clear();
+
+      String query = "select " +
+          "case when m.age <= 10 then '학생요금'" +
+          "when m.age >= 60 then '경로요금'" +
+          "else '일바요금'" +
+          "end " +
+          "from Member m";
+
+      List<String> resultList = em.createQuery(query, String.class).getResultList();
+
+      for (String s : resultList) {
+        System.out.println(s);
+      }
 
       tx.commit();
     } catch (Exception e) {
