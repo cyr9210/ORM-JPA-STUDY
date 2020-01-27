@@ -17,21 +17,16 @@ public class JpqlMain {
 
     try {
 
-      for (int i = 0; i < 100; i++) {
-        Member member = createMember("member", i);
+      for (int i = 0; i < 5; i++) {
+        String username = "member" + i;
+        Member member = createMember(username, i);
         em.persist(member);
       }
 
       em.flush();
       em.clear();
 
-      String query = "select " +
-          "case when m.age <= 10 then '학생요금'" +
-          "when m.age >= 60 then '경로요금'" +
-          "else '일바요금'" +
-          "end " +
-          "from Member m";
-
+      String query = "select function('group_concat', m.name) from Member m";
       List<String> resultList = em.createQuery(query, String.class).getResultList();
 
       for (String s : resultList) {
