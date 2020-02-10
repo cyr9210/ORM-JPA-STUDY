@@ -17,20 +17,32 @@ public class JpqlMain {
 
     try {
 
-      for (int i = 0; i < 5; i++) {
-        String username = "member" + i;
-        Member member = createMember(username, i);
-        em.persist(member);
-      }
+      Team teamA = createTeam("팀A");
+      Team teamB = createTeam("팀B");
+      Team teamC = createTeam("팀C");
+      em.persist(teamA);
+      em.persist(teamB);
+      em.persist(teamC);
+
+      em.persist(createMember("회원1", 20, teamA));
+      em.persist(createMember("회원2", 20, teamB));
+      em.persist(createMember("회원3", 20, teamA));
+      em.persist(createMember("회원4", 20, null));
 
       em.flush();
       em.clear();
 
-      String query = "select function('group_concat', m.name) from Member m";
-      List<String> resultList = em.createQuery(query, String.class).getResultList();
+      String query = "select t from Team t ";
+      List<Team> resultList = em.createQuery(query, Team.class)
+          .setFirstResult(0)
+          .setMaxResults(2)
+          .getResultList();
 
-      for (String s : resultList) {
-        System.out.println(s);
+      for (Team t : resultList) {
+        System.out.println("team.name = " + t.getName() + ", team.members.size = " + t.getMembers().size());
+        for (Member m : t.getMembers()) {
+          System.out.println("->member.name = " + m.getName() + ", member.age = " + m.getAge());
+        }
       }
 
       tx.commit();
@@ -44,10 +56,17 @@ public class JpqlMain {
     emf.close();
   }
 
-  private static Member createMember(String name, int age) {
+  private static Team createTeam(String name) {
+    Team team = new Team();
+    team.setName(name);
+    return team;
+  }
+
+  private static Member createMember(String name, int age, Team team) {
     Member member = new Member();
     member.setName(name);
     member.setAge(age);
+    member.setTeam(team);
     return member;
   }
 }
