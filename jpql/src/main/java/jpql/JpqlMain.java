@@ -1,10 +1,10 @@
 package jpql;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class JpqlMain {
 
@@ -29,20 +29,17 @@ public class JpqlMain {
       em.persist(createMember("회원3", 20, teamA));
       em.persist(createMember("회원4", 20, null));
 
-      em.flush();
-      em.clear();
 
-      String query = "select t from Team t ";
-      List<Team> resultList = em.createQuery(query, Team.class)
-          .setFirstResult(0)
-          .setMaxResults(2)
+      String query = "update Member m set m.age = 30";
+
+      int result = em.createQuery(query).executeUpdate();
+      System.out.println(result);
+
+      List<Member> members = em.createQuery("select m from Member m", Member.class)
           .getResultList();
 
-      for (Team t : resultList) {
-        System.out.println("team.name = " + t.getName() + ", team.members.size = " + t.getMembers().size());
-        for (Member m : t.getMembers()) {
-          System.out.println("->member.name = " + m.getName() + ", member.age = " + m.getAge());
-        }
+      for (Member member : members) {
+        System.out.println(member);
       }
 
       tx.commit();
