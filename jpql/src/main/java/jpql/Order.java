@@ -18,6 +18,11 @@ public class Order {
   @JoinColumn(name = "product_id")
   private Product product;
 
+  public void addOrder(Product product) {
+    this.product = product;
+    product.getOrders().add(this);
+  }
+
   public Long getId() {
     return id;
   }

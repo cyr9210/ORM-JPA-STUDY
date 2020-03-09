@@ -1,6 +1,5 @@
 package jpql;
 
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -16,31 +15,32 @@ public class JpqlMain {
     tx.begin();
 
     try {
+      Product product = new Product();
+      product.setName("product");
+      product.setPrice(1000);
+      product.setStockAmount(100);
 
-      Team teamA = createTeam("팀A");
-      Team teamB = createTeam("팀B");
-      Team teamC = createTeam("팀C");
-      em.persist(teamA);
-      em.persist(teamB);
-      em.persist(teamC);
+      Order order = new Order();
+      order.setOrderAmount(1);
+      order.setProduct(product);
+      product.getOrders().add(order);
 
-      em.persist(createMember("회원1", 20, teamA));
-      em.persist(createMember("회원2", 20, teamB));
-      em.persist(createMember("회원3", 20, teamA));
-      em.persist(createMember("회원4", 20, null));
+      em.persist(product);
+
+      System.out.println("flush");
+      em.flush();
+      em.clear();
+      System.out.println("=========");
 
 
-      String query = "update Member m set m.age = 30";
+      Product product1 = em.find(Product.class, 1L);
+      product1.getOrders().size();
 
-      int result = em.createQuery(query).executeUpdate();
-      System.out.println(result);
+      Order order2 = new Order();
+      order2.setOrderAmount(2);
 
-      List<Member> members = em.createQuery("select m from Member m", Member.class)
-          .getResultList();
+      product1.addOrders(order2);
 
-      for (Member member : members) {
-        System.out.println(member);
-      }
 
       tx.commit();
     } catch (Exception e) {
